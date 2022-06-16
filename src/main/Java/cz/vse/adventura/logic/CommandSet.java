@@ -13,7 +13,7 @@ import java.util.Map;
  */
 class CommandSet {
     // map for containing commands
-    private  Map<String, ICommand> commandMap;
+    private final Map<String, ICommand> commandMap;
     
    
     
@@ -42,12 +42,7 @@ class CommandSet {
      *@return          instance of a command that will be executed.
      */
     public ICommand returnCommand(String keyword) {
-        if (commandMap.containsKey(keyword)) {
-            return commandMap.get(keyword);
-        }
-        else {
-            return null;
-        }
+        return commandMap.getOrDefault(keyword, null);
     }
 
     /**
@@ -66,11 +61,11 @@ class CommandSet {
      *  @return     String that contains a list of valid keywords.
      */
     public String returnCommandName() {
-        String list = "";
+        StringBuilder list = new StringBuilder();
         for (String keyword : commandMap.keySet()){
-            list += keyword + " ";
+            list.append(keyword).append(" ");
         }
-        return list;
+        return list.toString();
     }
 
     /**

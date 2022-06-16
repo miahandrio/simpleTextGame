@@ -12,8 +12,8 @@ import java.util.Objects;
 public class CommandUse implements ICommand {
     private static final String NAME = "use";
     private static final String DESCRIPTION = "- used for every sort of manipulation with an item.";
-    private Inventory inventory;
-    private GamePlan gamePlan;
+    private final Inventory inventory;
+    private final GamePlan gamePlan;
     private int rightPencilCount = 0;
 
     public CommandUse(Inventory inventory, GamePlan gamePlan) {
@@ -34,18 +34,18 @@ public class CommandUse implements ICommand {
             return "check your inventory for the items you have.";
         }
 
-        String itemName = "";
+        StringBuilder itemName = new StringBuilder();
         for (String word : parameters) {
-            itemName += word + " ";
+            itemName.append(word).append(" ");
         }
 
-        itemName = itemName.trim();
-        Item item = inventory.get(itemName);
+        itemName = new StringBuilder(itemName.toString().trim());
+        Item item = inventory.get(itemName.toString());
         if (item == null) {
             return "you don't have that item.";
         }
 
-        return identifyItem(itemName);
+        return identifyItem(itemName.toString());
     }
 
     private String identifyItem(String itemName) {

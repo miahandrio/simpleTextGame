@@ -18,7 +18,7 @@ import cz.vse.adventura.logic.IGame;
  */
 
 public class TextInterface {
-    private IGame game;
+    private final IGame game;
     private static int writeSpeed = 20;
 
     /**

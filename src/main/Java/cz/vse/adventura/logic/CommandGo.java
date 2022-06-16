@@ -8,9 +8,9 @@ package cz.vse.adventura.logic;
 class CommandGo implements ICommand {
     private static final String NAME = "go";
     private static final String DESCRIPTION = " - used for moving between locations";
-    private GamePlan gamePlan;
-    private Inventory inventory;
-    private Game game;
+    private final GamePlan gamePlan;
+    private final Inventory inventory;
+    private final Game game;
     
     /**
     *  CLass constructor
@@ -39,11 +39,11 @@ class CommandGo implements ICommand {
         }
 
         // creating a room name
-        String direction = "";
+        StringBuilder direction = new StringBuilder();
         for (String word : parameters) {
-            direction += word + " ";
+            direction.append(word).append(" ");
         }
-        Room neighbouringRoom = gamePlan.getCurrentRoom().returnNeighbouringRoom(direction.trim());
+        Room neighbouringRoom = gamePlan.getCurrentRoom().returnNeighbouringRoom(direction.toString().trim());
 
         //Checking if a room can be accessed
         if (neighbouringRoom == null) {

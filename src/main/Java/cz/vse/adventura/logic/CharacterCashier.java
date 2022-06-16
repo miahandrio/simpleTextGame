@@ -10,11 +10,11 @@ import java.util.Map;
  * @author Mykhailo Bubnov
  */
 public class CharacterCashier implements ICharacter{
-    private Inventory inventory;
-    private GamePlan gamePlan;
+    private final Inventory inventory;
+    private final GamePlan gamePlan;
     private static final String NAME = "cashier";
-    private boolean dialogueAble = true;
-    private Map<String, String> responseVariants = new HashMap<>();
+    private final boolean dialogueAble = true;
+    private final Map<String, String> responseVariants = new HashMap<>();
 
     public CharacterCashier(Inventory inventory, GamePlan gamePlan) {
         this.inventory = inventory;
