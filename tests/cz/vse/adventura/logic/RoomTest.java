@@ -1,8 +1,6 @@
 package cz.vse.adventura.logic;
 
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,16 +20,17 @@ public class RoomTest
         room1.setExit(room2);
         room2.setExit(room1);
         assertEquals(room2, room1.returnNeighbouringRoom("post office"));
-        assertEquals(null, room2.returnNeighbouringRoom("paper store"));
+        assertNull(room2.returnNeighbouringRoom("paper store"));
         room1.setExit(room3);
         assertEquals(room3, room1.returnNeighbouringRoom("paper store"));
         room1.setItem(new Item("item 1", false, ""));
         room1.addCharacter(new CharacterCashier(game.getInventory(), game.getGamePlan()));
         game.getGamePlan().setCurrentRoom(room2);
-        assertEquals("You are in the alberta hypermarket.\n" +
-            "Exits here: post office   paper store   \n" +
-            "Items here: item 1   \n" +
-            "A single cashier here is present, responsibly standing at the counter.", game.processCommand("go albert"));
+        assertEquals("""
+            You are in the alberta hypermarket.
+            Exits here: post office   paper store  \s
+            Items here: item 1  \s
+            A single cashier here is present, responsibly standing at the counter.""", game.processCommand("go albert"));
     }
 
 }

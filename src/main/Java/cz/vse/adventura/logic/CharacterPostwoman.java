@@ -10,13 +10,13 @@ import java.util.Map;
  * @author Mykhailo Bubnov
  */
 public class CharacterPostwoman implements ICharacter {
-    private Inventory inventory;
-    private GamePlan gamePlan;
+    private final Inventory inventory;
+    private final GamePlan gamePlan;
     private static final String NAME = "linda";
     private boolean dialogueAble = true;
     private String methodOfTaking = "";
     private boolean wasMet = false;
-    private Map<String, String> responseVariants = new HashMap<>();
+    private final Map<String, String> responseVariants = new HashMap<>();
     Item frog = new Item("lovely frog", true, "");
 
     public CharacterPostwoman(Inventory inventory, GamePlan gamePlan) {
@@ -46,11 +46,11 @@ public class CharacterPostwoman implements ICharacter {
         } else if (!(inventory == null) && inventory.show().contains("fluffy parrot")) {
             responseVariants.put("a", "Attack her with a parrot!");
         }
-        String outText = "";
+        StringBuilder outText = new StringBuilder();
         for (String variantKey : responseVariants.keySet()) {
-            outText += variantKey + ". " + responseVariants.get(variantKey) + "\n";
+            outText.append(variantKey).append(". ").append(responseVariants.get(variantKey)).append("\n");
         }
-        return outText;
+        return outText.toString();
     }
 
     /**
@@ -61,18 +61,9 @@ public class CharacterPostwoman implements ICharacter {
     public String getRespond(String playerLine) {
         String respond = "";
         switch (playerLine) {
-            case ("a") : {
-                respond = parrotVariant();
-                break;
-            }
-            case ("b") : {
-                respond = "Linda: Have you heard me right? We're on a break, and I hadn't seen any stupid frogs here!";
-                break;
-            }
-            case ("c") : {
-                respond = plushieVariant();
-                break;
-            }
+            case ("a") -> respond = parrotVariant();
+            case ("b") -> respond = "Linda: Have you heard me right? We're on a break, and I hadn't seen any stupid frogs here!";
+            case ("c") -> respond = plushieVariant();
         }
         gamePlan.setCurrentSpeaker(null);
         return respond + "\nThe dialogue was ended.";
@@ -144,16 +135,6 @@ public class CharacterPostwoman implements ICharacter {
             }
             return greetingAfterPlushie + "\nThe dialogue was ended.";
         }
-    }
-
-    /**
-     * Getters for is a character could be spoken, character's description,
-     * a map of valid responses and her name.
-     */
-
-    @Override
-    public boolean getDialogueAble() {
-        return dialogueAble;
     }
 
     @Override

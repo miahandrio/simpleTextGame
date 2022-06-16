@@ -13,9 +13,9 @@ package cz.vse.adventura.logic;
  */
 
 public class Game implements IGame {
-    private CommandSet validCommands;
-    private GamePlan gamePlan;
-    private Inventory inventory;
+    private final CommandSet validCommands;
+    private final GamePlan gamePlan;
+    private final Inventory inventory;
     private boolean gameEnd = false;
     private boolean win = false;
 

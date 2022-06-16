@@ -13,7 +13,6 @@ public class CharacterCashier implements ICharacter{
     private final Inventory inventory;
     private final GamePlan gamePlan;
     private static final String NAME = "cashier";
-    private final boolean dialogueAble = true;
     private final Map<String, String> responseVariants = new HashMap<>();
 
     public CharacterCashier(Inventory inventory, GamePlan gamePlan) {
@@ -33,26 +32,22 @@ public class CharacterCashier implements ICharacter{
     public String getRespond(String playerLine) {
         String respond;
         switch (playerLine) {
-            case ("a"): {
+            case ("a") -> {
                 inventory.insert(new Item("sausage", true, ""));
                 respond = "Here is your sausage.";
                 responseVariants.remove("a");
-                break;
-            }case ("b"): {
+            }
+            case ("b") -> {
                 inventory.insert(new Item("ham", true, ""));
                 respond = "Here is your ham.";
                 responseVariants.remove("b");
-                break;
-            }case ("c"): {
+            }
+            case ("c") -> {
                 inventory.insert(new Item("cutlet", true, ""));
                 respond = "Here is your cutlet.";
                 responseVariants.remove("c");
-                break;
             }
-            default: {
-                respond = "try typing a b or c.";
-                break;
-            }
+            default -> respond = "try typing a b or c.";
         }
         gamePlan.setCurrentSpeaker(null);
         return respond + "\nThe dialogue was ended.";
@@ -72,11 +67,11 @@ public class CharacterCashier implements ICharacter{
      * @return printable variants.
      */
     public String printResponseVariants() {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (String variantKey : responseVariants.keySet()) {
-            text += variantKey + ". " + responseVariants.get(variantKey) + "\n";
+            text.append(variantKey).append(". ").append(responseVariants.get(variantKey)).append("\n");
         }
-        return text;
+        return text.toString();
     }
 
     /**
@@ -94,7 +89,7 @@ public class CharacterCashier implements ICharacter{
 
 
     /**
-     * getters for the character's name, description, a map of responses and if you can speak with them.
+     * getters for the character's name, description, a map of responses.
      */
     @Override
     public String getName() {
@@ -109,10 +104,5 @@ public class CharacterCashier implements ICharacter{
     @Override
     public Map<String, String> getResponseMap() {
         return responseVariants;
-    }
-
-    @Override
-    public boolean getDialogueAble() {
-        return dialogueAble;
     }
 }

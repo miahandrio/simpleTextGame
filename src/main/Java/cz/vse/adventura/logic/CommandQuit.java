@@ -11,7 +11,7 @@ class CommandQuit implements ICommand {
 
     private static final String NAME = "quit";
     private static final String DESCRIPTION = " - used for quitting the game";
-    private Game game;
+    private final Game game;
 
     /**
      *  Class constructor

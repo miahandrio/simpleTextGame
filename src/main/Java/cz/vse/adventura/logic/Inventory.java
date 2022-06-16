@@ -10,7 +10,7 @@ import java.util.Set;
  */
 
 public class Inventory {
-    private Map<String, Item> itemMap = new HashMap<>();
+    private final Map<String, Item> itemMap = new HashMap<>();
 
 
     /**

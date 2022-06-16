@@ -32,11 +32,6 @@ public interface ICharacter {
     String getRespond(String playerLine);
 
     /**
-     * Tells, if a character can be spoken to.
-     */
-    boolean getDialogueAble();
-
-    /**
      * Adds the variants of player response to the map
      */
     void addResponseVariants();

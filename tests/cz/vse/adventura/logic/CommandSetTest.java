@@ -11,9 +11,9 @@ import static org.junit.Assert.*;
  */
 public class CommandSetTest
 {
-    private Game game = new Game();
-    private GamePlan gamePlan = game.getGamePlan();
-    private Inventory inventory = game.getInventory();;
+    private final Game game = new Game();
+    private final GamePlan gamePlan = game.getGamePlan();
+    private final Inventory inventory = game.getInventory();
     private CommandCollect commandCollect;
     private CommandGo commandGo;
     private CommandInventory commandInventory;
@@ -58,10 +58,10 @@ public class CommandSetTest
         CommandSet commandSet = new CommandSet();
         commandSet.addCommand(commandQuit);
         commandSet.addCommand(commandGo);
-        assertEquals(true, commandSet.isValidCommand("quit"));
-        assertEquals(true, commandSet.isValidCommand("go"));
-        assertEquals(false, commandSet.isValidCommand("help"));
-        assertEquals(false, commandSet.isValidCommand("Go"));
+        assertTrue(commandSet.isValidCommand("quit"));
+        assertTrue(commandSet.isValidCommand("go"));
+        assertFalse(commandSet.isValidCommand("help"));
+        assertFalse(commandSet.isValidCommand("Go"));
     }
     
     @Test
@@ -70,10 +70,10 @@ public class CommandSetTest
         commandSet.addCommand(commandQuit);
         commandSet.addCommand(commandGo);
         String names = commandSet.returnCommandName();
-        assertEquals(true, names.contains("quit"));
-        assertEquals(true, names.contains("go"));
-        assertEquals(false, names.contains("help"));
-        assertEquals(false, names.contains("Quit"));
+        assertTrue(names.contains("quit"));
+        assertTrue(names.contains("go"));
+        assertFalse(names.contains("help"));
+        assertFalse(names.contains("Quit"));
     }
     
 }

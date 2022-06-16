@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * @author    Bubnov Mykhailo
  */
 public class CommandsTest {
-    private Game game = new Game();
+    private final Game game = new Game();
 
     @Test
     public void testGameEnd() {
@@ -22,27 +22,27 @@ public class CommandsTest {
         game.getGamePlan().setCurrentRoom(room2);
         game.getInventory().insert(new Item("lovely frog", true, ""));
         game.processCommand("go pet store");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         game.getInventory().insert(new Item("charming cat", true, ""));
         game.getGamePlan().setCurrentRoom(room2);
         game.processCommand("go pet store");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         game.getInventory().insert(new Item("fluffy parrot", true, ""));
         game.getGamePlan().setCurrentRoom(room2);
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         game.getGamePlan().setCurrentRoom(room1);
-        assertEquals(false, game.gameEnd());
-        assertEquals(false, game.isWin());
+        assertFalse(game.gameEnd());
+        assertFalse(game.isWin());
         game.getGamePlan().setCurrentRoom(room2);
         game.processCommand("go pet store");
-        assertEquals(true, game.gameEnd());
-        assertEquals(true,game.isWin());
+        assertTrue(game.gameEnd());
+        assertTrue(game.isWin());
         game.getGamePlan().setCurrentRoom(room2);
         game.setGameEnd(false);
         game.setWin(false);
         game.processCommand("go pet store");
-        assertEquals(true, game.gameEnd());
-        assertEquals(true,game.isWin());
+        assertTrue(game.gameEnd());
+        assertTrue(game.isWin());
     }
 
     @Test
@@ -50,16 +50,16 @@ public class CommandsTest {
         assertEquals("pet store", game.getGamePlan().getCurrentRoom().getName());
 
         game.processCommand("go main corridor");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         assertEquals("main corridor", game.getGamePlan().getCurrentRoom().getName());
 
         game.processCommand("go post office");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         assertEquals("post office", game.getGamePlan().getCurrentRoom().getName());
 
         game.processCommand("go main corridor");
         game.processCommand("go paper store");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         assertEquals("paper store", game.getGamePlan().getCurrentRoom().getName());
     }
 
@@ -67,7 +67,6 @@ public class CommandsTest {
     public void testCommandCollect() {
         Item item1 = new Item("movable 1", true, "i can move");
         Item item2 = new Item("immovable", false, "i can't move");
-        Item item3 = new Item("movable 2", false, "i can't move");
         Item pencils = new Item("pencils", true, "");
         game.getGamePlan().getCurrentRoom().setItem(item1);
         game.getGamePlan().getCurrentRoom().setItem(item2);
@@ -83,11 +82,11 @@ public class CommandsTest {
 
     @Test
     public void testCommandQuit() {
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         game.processCommand("quit c");
-        assertEquals(false, game.gameEnd());
+        assertFalse(game.gameEnd());
         game.processCommand("quit");
-        assertEquals(true, game.gameEnd());
+        assertTrue(game.gameEnd());
     }
 
     @Test
@@ -96,14 +95,16 @@ public class CommandsTest {
         CharacterCashier cashier = new CharacterCashier(game.getInventory(), game.getGamePlan());
         game.getGamePlan().getCurrentRoom().addCharacter(postwoman);
         game.getGamePlan().getCurrentRoom().addCharacter(cashier);
-        assertEquals("Linda: We are on a brake. You'd rather not bother me right now.\n" +
-            "*You knew that they had their break 2 hours ago*\n" +
-            "a. Attach her with a parrot!(not available)\n" +
-            "b. \"I need your help, haven't you seen a frog here?\"\n" +
-            "c. Present her with a plushie!(not available)\n", game.processCommand("speak linda"));
+        assertEquals("""
+            Linda: We are on a brake. You'd rather not bother me right now.
+            *You knew that they had their break 2 hours ago*
+            a. Attach her with a parrot!(not available)
+            b. "I need your help, haven't you seen a frog here?"
+            c. Present her with a plushie!(not available)
+            """, game.processCommand("speak linda"));
         assertEquals("try a \"respond\" command", game.processCommand("speak cashier"));
         game.processCommand("respond b");
-        assertEquals("There isn't any person named parrot here.", game.processCommand("speak parrot"));
+        assertEquals("There isn't any character named parrot here.", game.processCommand("speak parrot"));
     }
 
     @Test
@@ -121,15 +122,15 @@ public class CommandsTest {
     @Test
     public void textCommandUse() {
         game.getInventory().insert(new Item("cat manual", true, ""));
-        assertEquals("To easily catch a cat you'll need a transport box and a ham.\n" +
-            "Put a piece of ham gently into the transport box,\n" +
-            "walk away and wait till your prey is caught.", game.processCommand("use cat manual"));
+        assertEquals("""
+            To easily catch a cat you'll need a transport box and a ham.
+            Put a piece of ham gently into the transport box,
+            walk away and wait till your prey is caught.""", game.processCommand("use cat manual"));
         game.getInventory().insert(new Item("transport box", true, ""));
         game.getInventory().insert(new Item("ham", true, ""));
         assertEquals("It doesn't has much use here.", game.processCommand("use transport box"));
         assertEquals("Maybe you should use it in a different place.", game.processCommand("use ham"));
         Room albert = new Room("albert", "");
-        Room mainCorridor = new Room("main corridor", "");
         game.getGamePlan().setCurrentRoom(albert);
         assertEquals("Item transport box was removed from inventory.\n" +
             "A good beginning for a cat-trap, but how do you lure him inside this box?", game.processCommand("use transport box"));

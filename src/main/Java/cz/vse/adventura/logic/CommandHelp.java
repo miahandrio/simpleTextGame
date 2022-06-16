@@ -1,7 +1,5 @@
 package cz.vse.adventura.logic;
 
-import java.util.Map;
-
 /**
  *  Class CommandHelp implements a help command.
  *  
@@ -12,7 +10,7 @@ class CommandHelp implements ICommand {
     
     private static final String NAME = "help";
     private static final String DESCRIPTION = " - use if you got lost";
-    private CommandSet validCommands;
+    private final CommandSet validCommands;
 
      /**
     *  Class constructor
@@ -43,11 +41,14 @@ class CommandHelp implements ICommand {
      * Generates a table with commands and their description.
      */
     public String generateDescription() {
-        String description = "";
-        for (Map.Entry<String, ICommand> entry : validCommands.getCommandMap().entrySet()) {
-            description += entry.getKey() + entry.getValue().getDescription() + "\n";
+        StringBuilder description = new StringBuilder();
+        for (ICommand command : validCommands.getCommandMap().values()) {
+            description
+                .append(command.getName())
+                .append(command.getDescription())
+                .append("\n");
         }
-        return description;
+        return description.toString();
     }
 
 

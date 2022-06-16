@@ -18,7 +18,7 @@ public class GamePlan {
     private Room paperStoreRoom;
     public Item itemInAlbert;
     private ICharacter currentSpeaker;
-    private Inventory inventory;
+    private final Inventory inventory;
     
      /**
      *  Constructor that calls createGameRooms method that creates game spaces and connects them with exits.
@@ -38,8 +38,10 @@ public class GamePlan {
         Room mainCorridor = new Room("main corridor",". \nFrom here, you can go to any store");
         Room postOffice = new Room("post office",". \nThere's not much people here in this time of day");
         Room albert = new Room("albert",". \nA big hypermarket, a paradise for predators like humans or ... cats");
-        Room flyingTiger = new Room("flying tiger",". \nA store full of different presents that can melt even the coldest hearts" +
-            "\nIt seems like today they have a promotion action, you could take a little frog plushie completely for free");
+        Room flyingTiger = new Room("flying tiger", """
+            .\s
+            A store full of different presents that can melt even the coldest hearts
+            It seems like today they have a promotion action, you could take a little frog plushie completely for free""");
         Room paperStore = new Room("paper store", """
             .\s
             A store full of various pens, pencils, notebooks and other things that can interest a curious bird.

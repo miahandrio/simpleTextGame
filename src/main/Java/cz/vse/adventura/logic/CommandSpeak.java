@@ -10,8 +10,8 @@ public class CommandSpeak implements ICommand {
 
     private static final String NAME = "speak";
     private static final String DESCRIPTION = " - used to enter a dialogue with characters";
-    private GamePlan gamePlan;
-    private Inventory inventory;
+    private final GamePlan gamePlan;
+    private final Inventory inventory;
 
     public CommandSpeak(GamePlan gamePlan, Inventory inventory) {
         this.gamePlan = gamePlan;

@@ -11,7 +11,7 @@ public class CommandRespond implements ICommand {
 
     private static final String NAME = "respond";
     private static final String DESCRIPTION = " - used in dialogue to answer";
-    private GamePlan plan;
+    private final GamePlan plan;
 
     public CommandRespond(GamePlan plan) {
         this.plan = plan;
@@ -29,10 +29,6 @@ public class CommandRespond implements ICommand {
         ICharacter speaker = plan.getCurrentSpeaker();
         if (speaker == null) {
             return "You aren't speaking right now.";
-        }
-
-        if (!speaker.getDialogueAble()) {
-            return "you already spoke to that character.";
         }
         if (parameters.length == 0) {
             return "respond what?";

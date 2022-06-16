@@ -32,12 +32,12 @@ public class CommandCollect implements ICommand {
             return "Collect what?";
         }
 
-        String itemName = "";
+        StringBuilder itemName = new StringBuilder();
         for (String word : parameters) {
-            itemName += word + " ";
+            itemName.append(word).append(" ");
         }
-        itemName = itemName.trim();
-        Item item = gamePlan.getCurrentRoom().returnItem(itemName);
+        String itemNameStr = itemName.toString().trim();
+        Item item = gamePlan.getCurrentRoom().returnItem(itemNameStr);
 
         if (item == null) {
             return "Seems that such item is nowhere to be found.";
@@ -46,15 +46,15 @@ public class CommandCollect implements ICommand {
         }
 
         //collect phase
-        gamePlan.getCurrentRoom().deleteItem(itemName);
-        if (itemName.equals("pencils")) {
+        gamePlan.getCurrentRoom().deleteItem(itemNameStr);
+        if (itemNameStr.equals("pencils")) {
             return collectPencils();
         }
         inventory.insert(item);
         if (item.getDescription().equals("")) {
-            return "Item " + itemName + " was collected.";
+            return "Item " + itemNameStr + " was collected.";
         }
-        return "Item " + itemName + " was collected." + "\n" + item.getDescription();
+        return "Item " + itemNameStr + " was collected." + "\n" + item.getDescription();
     }
 
     /**

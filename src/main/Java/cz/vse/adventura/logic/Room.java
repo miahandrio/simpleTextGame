@@ -14,11 +14,11 @@ import java.util.*;
  */
 public class Room {
 
-    private String name;
+    private final String name;
     private String description;
-    private Set<Room> exits;   // contains neighbouring rooms
-    private Map<String, Item> items = new HashMap<>();
-    private Map<String, ICharacter> characters = new HashMap<>();
+    private final Set<Room> exits;   // contains neighbouring rooms
+    private final Map<String, Item> items = new HashMap<>();
+    private final Map<String, ICharacter> characters = new HashMap<>();
 
     /**
      * Creates room with assigned name and description
@@ -125,11 +125,11 @@ public class Room {
      * @return printable list of exits.
      */
     private String exitsDescription() {
-        String returnText = "Exits here: ";
+        StringBuilder returnText = new StringBuilder("Exits here: ");
         for (Room nextRoom : exits) {
-            returnText += nextRoom.getName() + "   ";
+            returnText.append(nextRoom.getName()).append("   ");
         }
-        return returnText;
+        return returnText.toString();
     }
 
     /**
@@ -140,16 +140,16 @@ public class Room {
      * @return printable list of items.
      */
     private String itemsDescription() {
-        String returnText = "Items here: ";
+        StringBuilder returnText = new StringBuilder("Items here: ");
 
         if (items.keySet().size() == 0) {
-            returnText += "none";
+            returnText.append("none");
         } else {
             for (String itemName : items.keySet()) {
-                returnText += itemName + "   ";
+                returnText.append(itemName).append("   ");
             }
         }
-        return returnText;
+        return returnText.toString();
     }
 
 
@@ -165,11 +165,11 @@ public class Room {
         if (characters.keySet().size() == 0) {
             return "";
         } else {
-            String charactersDescription = "";
+            StringBuilder charactersDescription = new StringBuilder();
             for (String characterName : characters.keySet()) {
-                charactersDescription += characters.get(characterName).getDescription() + "\n";
+                charactersDescription.append(characters.get(characterName).getDescription()).append("\n");
             }
-            return charactersDescription.trim();
+            return charactersDescription.toString().trim();
         }
     }
 
@@ -228,10 +228,9 @@ public class Room {
             return true;
         }
 
-        if (!(o instanceof Room)) {
+        if (!(o instanceof Room second)) {
             return false;
         }
-        Room second = (Room) o;
 
         //Equals method from the java.utils.Objects class compares names of rooms.
         //Returns true for equal names even if both names are null, otherwise returns false.

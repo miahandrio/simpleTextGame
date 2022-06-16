@@ -12,7 +12,7 @@ public class CommandInventory implements ICommand {
 
     private static final String NAME = "inventory";
     private static final String DESCRIPTION = " - used for viewing what's in your inventory";
-    private Inventory inventory;
+    private final Inventory inventory;
 
 
     public CommandInventory(Inventory inventory) {
@@ -37,12 +37,14 @@ public class CommandInventory implements ICommand {
             if (inventory.show().size() == 0) {
                 return "You have no items currently";
             } else {
-                String returnString = "You have these items: ";
 
+                StringBuilder returnString = new StringBuilder("You have these items: ");
                 for (String currentItem : inventory.show()) {
-                    returnString += currentItem + "   ";
+                    returnString.append(currentItem)
+                        .append("   ");
                 }
-                return returnString;
+
+                return returnString.toString();
 
             }
         }
