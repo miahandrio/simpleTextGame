@@ -18,9 +18,7 @@ public class Inventory {
      * @param item - instance of an item to be added.
      */
     public void insert(Item item) {
-        if (controlInventory()) {
-            itemMap.put(item.getName(), item);
-        }
+        itemMap.put(item.getName(), item);
     }
 
     /**
@@ -55,9 +53,5 @@ public class Inventory {
      */
     public void remove(String itemName) {
         itemMap.remove(itemName);
-    }
-
-    private boolean controlInventory() {
-        return itemMap.size() <= 4;
     }
 }
