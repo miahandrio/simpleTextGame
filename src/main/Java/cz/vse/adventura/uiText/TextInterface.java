@@ -1,6 +1,8 @@
 package cz.vse.adventura.uiText;
 
 
+import java.io.*;
+import java.util.Locale;
 import java.util.Scanner;
 
 import cz.vse.adventura.logic.IGame;
@@ -33,14 +35,45 @@ public class TextInterface {
      *  users input until the game is finished (while method gameEnd isn't returning true).
      *  In the end prints epilogue.
      */
-    public void play() {
-        typewrite(game.returnGreeting());
+    public void playToSave(String saveFileName) throws IOException {
+        PrintWriter savePrint = new PrintWriter(new FileWriter("saves/" + saveFileName + ".txt"));
 
-        // basic game cycle, repeatedly reads and processes commands.
+            typewrite(game.returnGreeting());
+            // basic game cycle, repeatedly reads and processes commands.
+
+            while (!game.gameEnd()) {
+                String line = readLine();
+                savePrint.println(line);
+                typewrite(game.processCommand(line));
+            }
+            savePrint.close();
+
+            typewrite(game.returnEpilogue());
+    }
+
+    public void playFromSave(File saveFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(saveFile));
+        PrintWriter savePrint = new PrintWriter(new FileWriter(saveFile, true));
+
+        writeSpeed = 0;
+
+        String saveLine = reader.readLine();
+        while (saveLine != null) {
+            saveLine = saveLine.replace("quit", "");
+            typewrite("\n> " + saveLine + "\n");
+            typewrite(game.processCommand(saveLine));
+            saveLine = reader.readLine();
+        }
+        writeSpeed = 20;
 
         while (!game.gameEnd()) {
             String line = readLine();
+            savePrint.println(line);
             typewrite(game.processCommand(line));
+        }
+
+        if (game.isWin()) {
+            saveFile.delete();
         }
 
         typewrite(game.returnEpilogue());
@@ -56,6 +89,7 @@ public class TextInterface {
         typewrite("\n\n> ");
         return scanner.nextLine();
     }
+
 
 
     /**

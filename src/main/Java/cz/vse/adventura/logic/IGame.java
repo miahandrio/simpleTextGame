@@ -46,4 +46,9 @@ public interface IGame
      *  @return     link to a game plan
      */
      GamePlan getGamePlan();
+
+    /**
+     * Returns true if the game was won.
+     */
+     boolean isWin();
 }
