@@ -2,7 +2,6 @@ package cz.vse.adventura.uiText;
 
 
 import java.io.*;
-import java.util.Locale;
 import java.util.Scanner;
 
 import cz.vse.adventura.logic.IGame;
@@ -41,14 +40,7 @@ public class TextInterface {
             typewrite(game.returnGreeting());
             // basic game cycle, repeatedly reads and processes commands.
 
-            while (!game.gameEnd()) {
-                String line = readLine();
-                savePrint.println(line);
-                typewrite(game.processCommand(line));
-            }
-            savePrint.close();
-
-            typewrite(game.returnEpilogue());
+        standartPlay(savePrint);
     }
 
     public void playFromSave(File saveFile) throws IOException {
@@ -66,14 +58,19 @@ public class TextInterface {
         }
         writeSpeed = 20;
 
+        standartPlay(savePrint);
+    }
+
+
+    private void standartPlay(PrintWriter savePrint) {
         while (!game.gameEnd()) {
             String line = readLine();
             savePrint.println(line);
             typewrite(game.processCommand(line));
         }
 
-        if (game.isWin()) {
-            saveFile.delete();
+        if (!game.isWin()) {
+            savePrint.close();
         }
 
         typewrite(game.returnEpilogue());

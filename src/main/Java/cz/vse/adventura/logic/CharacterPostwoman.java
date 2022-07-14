@@ -29,7 +29,7 @@ public class CharacterPostwoman implements ICharacter {
      * Adds a valid responses to a response map.
      */
     public void addResponseVariants() {
-        responseVariants.put("a", "Attach her with a parrot!(not available)");
+        responseVariants.put("a", "Attack her with a parrot!(not available)");
         responseVariants.put("b", "\"I need your help, haven't you seen a frog here?\"");
         responseVariants.put("c", "Present her with a plushie!(not available)");
     }
